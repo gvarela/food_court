@@ -5,6 +5,9 @@
 *.tmproj
 tmtags
 
+## RubyMine
+.idea
+
 ## EMACS
 *~
 \#*
