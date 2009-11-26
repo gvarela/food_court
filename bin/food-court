@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+require "#{File.dirname(__FILE__)}/../lib/food_court/command.rb"
+
+trap "INT" do
+  exit!
+end
+
+FoodCourt::Command.new(*ARGV)

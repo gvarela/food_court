@@ -1,6 +1,11 @@
 application = "my_application"
 
 {
+  :file_cache_path => "/var/chef",
+  :keep_deployments => 2,
+  :cookbooks => [ '' ],
+
+  :dna => {
     :apps_dir => "/data/#{application}",
     :applications => [
         {
@@ -15,4 +20,5 @@ application = "my_application"
         "passenger",
         "applications"
     ]
+}
 }

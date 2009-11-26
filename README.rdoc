@@ -1,19 +1,19 @@
-= Chauffeur
+= Food Court
 
-Chauffeur is a streamlined way to use chef-solo and capistrano for VPS's such as slicehost.
+Food Court is a streamlined way to use chef-solo and capistrano for VPS's such as slicehost.
 
 = Instructions
 * cd into your project
-    chauffer setup .
+    food-court setup .
 * modify your dna.rb to change any default packages
 * the run the cap tasks to have chef-solo setup on the remote server
-    cap chauffeur:setup
+    cap food_court:setup
 * lastly run the chauffeur tweaked chef-solo config on the remote server
-    cap chauffeur:deploy
+    cap food_court:deploy
 
 = TODO
 * add generators for creating site-cookbooks in the current project repo
-* take params to include another default set of cookbooks to override chauffer-solo or opscode
+* enable setup to accept a remote location for templates
 
 == Note on Patches/Pull Requests
  

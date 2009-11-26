@@ -4,11 +4,11 @@ require 'rake'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "chauffeur"
+    gem.name = "Food Court"
     gem.summary = %Q{TODO: one-line summary of your gem}
     gem.description = %Q{TODO: longer description of your gem}
     gem.email = "gvarela@gmail.com"
-    gem.homepage = "http://github.com/gvarela/chauffeur"
+    gem.homepage = "http://github.com/gvarela/food_court"
     gem.authors = ["Gabe Varela"]
     gem.add_development_dependency "rspec", ">= 1.2.9"
     gem.add_development_dependency "yard", ">= 0"

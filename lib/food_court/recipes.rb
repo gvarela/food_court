@@ -6,7 +6,7 @@
 #
 make_notify_task = lambda do
 
-  namespace :chauffeur do
+  namespace :food_court do
 
     # run chauffeur chef-solo on the remote server
     desc "setup"
