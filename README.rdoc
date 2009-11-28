@@ -11,9 +11,12 @@ Food Court is a streamlined way to use chef-solo and capistrano for VPS's such a
 * lastly run the chauffeur tweaked chef-solo config on the remote server
     cap food_court:deploy
 
-= TODO
-* add generators for creating site-cookbooks in the current project repo
-* enable setup to accept a remote location for templates
+= Roadmap
+* create a default template that works on Ubuntu with Nginx and Passenger
+* add generators for stubbing site-cookbooks in the current project repo
+* enable setup to accept a remote location for template packages
+* setup a site to house common template packages (similar to the chef cookbooks site)
+* add ability to package up a template package and send to package site
 
 == Note on Patches/Pull Requests
  
@@ -28,3 +31,8 @@ Food Court is a streamlined way to use chef-solo and capistrano for VPS's such a
 == Copyright
 
 Copyright (c) 2009 Gabe Varela. See LICENSE for details.
+
+== Inspiration
+Josh Peek:        http://github.com/josh/slicehost/
+Thomas Balthazar: http://github.com/suitmymind/ubuntu-machine/
+Mike Hale:        http://github.com/mikehale/drive-thru/

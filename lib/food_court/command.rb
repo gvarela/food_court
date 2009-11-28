@@ -56,10 +56,10 @@ module FoodCourt
       end
     end
 
-    protected
-
     def configure(dir)
-      config_file = File.read(File.join(path, 'config/chef', 'order.rb'))
+      order_path = File.join(path, 'config/chef', 'order.rb')
+      raise "no order.rb found in path [#{order_path}]" unless File.exists?(order_path)
+      config_file = File.read(order_path)
       eval "@config ||= #{config_file}"
     end
 
