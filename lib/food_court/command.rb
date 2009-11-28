@@ -7,7 +7,7 @@ module FoodCourt
     TEMPLATE_PATH = File.join( File.dirname(__FILE__), '/../../', 'templates' )
 
     def initialize(*args)
-      @current_path = Dir.pwd
+      @current_path = ENV['PATH'] || Dir.pwd
       command = args.shift
       if self.respond_to? command.to_sym
         self.send command, *args
@@ -24,19 +24,20 @@ module FoodCourt
     end
 
     def help
-
+      puts File.read('../../README.rdoc')
     end
 
-    def package()
-      deployment_dir = File.join(current_path, 'config/chef/deployments/',  Time.now.strftime('%Y-%m-%d-%H-%M-%S'))
+    def compile()
+      time = Time.now
+      deployment_dir = File.join(current_path, 'config/chef/deployments',  time.strftime('%Y-%m-%d') + "-#{time}")
       FileUtils.mkdir_p deployment_dir
       dna = config[:dna]
-      open(deployment_dir + "/dna.json", "w").write(dna.to_json)
+      File.open(deployment_dir + "/dna.json", "w"){ |f| f.write(dna.to_json) }
 
       cache_path = config[:file_cache_path]
       cookbook_paths = cookbooks.map{ |book| "#{cache_path}/#{book}"}
-      open(deployment_dir + "/solo.rb", "w") do |file|
-        file.puts <<-EOH
+      File.open(deployment_dir + "/solo.rb", "w") do |file|
+        file.write <<-EOH
 file_cache_path '#{cache_path}'
 cookbook_path   [#{cookbook_paths}]
         EOH

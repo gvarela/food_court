@@ -11,7 +11,16 @@ make_notify_task = lambda do
     # run food_court chef-solo on the remote server
     desc "setup chef-solo on the remote server"
     task :setup, :only => {:food_court => true } do
-      
+      # TODO detect package manager to use
+#      run "uname -a" do |channel, stream, data|
+#        if data =~ /Ubuntu/
+#
+#        end
+#      end
+#      sudo "curl http://apt.opscode.com/packages@opscode.com.gpg.key | apt-key add -"
+      sudo "apt-get -y update"
+      sudo "apt-get install -y rubygems ohai chef"
+      sudo "/etc/init.d/chef-client stop"
     end
 
     desc "deploy your food_court chef-solo cookbooks"

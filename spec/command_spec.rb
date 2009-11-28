@@ -2,6 +2,9 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe "FoodCourt::Command" do
   before do
+    @path = File.expand_path(File.dirname(__FILE__) + '/fixtures')
+    ENV['PATH'] = @path
+    
     @order = File.open( File.join( FoodCourt::Command::TEMPLATE_PATH, '/slicehost', 'order.rb'), 'w' ) do |f|
       f.write <<-EOH
 {
@@ -73,15 +76,27 @@ describe "FoodCourt::Command" do
     end
   end
 
-  context "#prepare" do
+  context "#compile" do
     before do
       FoodCourt::Command.new('setup', 'slicehost')
-      @command = FoodCourt::Command.new('configure')
+      @command = FoodCourt::Command.new('compile')
       @command.package
     end
 
     it "should compile dna.json" do
-      pending
+      json = ''
+      Dir[File.join(@path, 'config/chef/deployments', '**', 'dna.json')].each do |file|
+        json = File.read(file)
+      end
+      json.should include('recipes')
+    end
+
+    it "should compile solo.rb" do
+      solo = ''
+      Dir[File.join(@path, 'config/chef/deployments', '**', 'solo.rb')].each do |file|
+        solo = File.read(file)
+      end
+      solo.should include('site-cookbooks')
     end
   end
 end
