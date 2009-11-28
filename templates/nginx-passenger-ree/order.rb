@@ -2,7 +2,6 @@ application = "my_application"
 
 {
   :file_cache_path => "/var/chef",
-  :keep_deployments => 2,
   :cookbooks => [ '' ],
 
   :dna => {
@@ -15,9 +14,10 @@ application = "my_application"
             }
     ],
     :recipes => [
+        "git",
         "mysql",
-        "nginx",
         "passenger",
+        "nginx",
         "applications"
     ]
 }

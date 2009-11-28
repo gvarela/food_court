@@ -1,0 +1,61 @@
+server {
+	# port to listen on. Can also be set to an IP:PORT
+	listen 80;
+	# set max size for file uploads to 50mb
+	client_max_body_size 50M;
+	# sets the domain[s] that this vhost server requests for
+	# if two apps are on this box remove the ip and setup your hosts file
+	server_name <%= "#{@params[:server_name]} #{@params[:server_aliases].join(' ')}"%>;
+	# doc root
+	root <%= @params[:current_dir] %>/public;
+
+  #passenger  
+  passenger_enabled on;
+  rails_env <%= @params[:rails_env] %>
+
+	# vhost specific logs
+	access_log <%= @params[:shared_dir] %>/log/<%= @params[:name] %>.access.log main;
+	error_log  <%= @params[:shared_dir] %>/log/<%= @params[:name] %>.error.log notice;
+
+	# this rewrites all the requests to the maintenance.thml page if it exists in the doc root.
+	# this is for capistrano's disable web task
+	if (-f $document_root/system/maintenance.html) {
+		rewrite ^(.*)$ /system/maintenance.html last;
+		break;
+	}
+	# block access to paths containing .svn
+	location ~* ^.*\.svn.*$ {
+		internal;
+	}
+
+	location / {
+
+		index index.html index.htm;
+
+		# use this as a reference for a full production deployment
+		# do not use on a dev box. this adds far futures expires.
+		<%= "#" if @params[:far_future_expires] %> location ~ ^/(images|javascripts|stylesheets)/ {
+		<%= "#" if @params[:far_future_expires] %> 	expires 10y;
+		<%= "#" if @params[:far_future_expires] %> }
+
+		# if file exists break execution and serve up file for example files in images, javascripts, and stylesheets
+		if (-f $request_filename) {
+			break;
+		}
+		# Rails page caching, if file path plus index.html exists break execution and serve up file
+		if (-f $request_filename/index.html) {
+			rewrite (.*) $1/index.html break;
+		}
+		# Rails page caching, if file.html exists break execution and serve up file
+		if (-f $request_filename.html) {
+			rewrite (.*) $1.html break;
+		}
+
+	}
+	# must be an error so point to error page.
+	error_page 500 502 503 504  /500.html;
+	location = /500.html {
+		root <%= @params[:current_dir] %>/public;
+	}
+
+}
