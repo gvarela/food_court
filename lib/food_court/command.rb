@@ -1,6 +1,7 @@
 require 'fileutils'
 module FoodCourt
   class Command
+    attr_reader :config
     TEMPLATE_PATH = File.join File.dirname(__FILE__), '/../../', 'templates'
 
     def initialize(*args)
@@ -17,7 +18,7 @@ module FoodCourt
       FileUtils.mkdir_p File.join path, 'config/chef'
       FileUtils.mkdir_p File.join path, 'config/chef/site-cookbooks'
       FileUtils.mkdir_p File.join path, 'config/chef/deployments'
-      FileUtils.cp File.join(TEMPLATE_PATH, template, 'menu.rb'), File.join(path, 'config/chef', 'menu.rb')
+      FileUtils.cp File.join(TEMPLATE_PATH, template, 'order.rb'), File.join(path, 'config/chef', 'order.rb')
     end
 
     def help
@@ -53,6 +54,13 @@ module FoodCourt
           EOH
         end
       end
+    end
+
+    protected
+
+    def configure(dir)
+      config_file = File.read(File.join(path, 'config/chef', 'order.rb'))
+      eval "@config ||= #{config_file}"
     end
 
   end
