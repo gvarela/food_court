@@ -1,6 +1,6 @@
 #
 # You need to add
-#  require 'chauffeur/recipes'
+#  require 'food_court/recipes'
 # to your deploy.rb
 #
 #
@@ -10,19 +10,17 @@ make_notify_task = lambda do
 
     # run food_court chef-solo on the remote server
     desc "setup chef-solo on the remote server"
-    task :setup, :only => {:food_court => true } do
-      # TODO detect package manager to use or use sprinkle_chef for bootstrapping chef
-      sudo "apt-get -y update"
-      sudo "apt-get install -y rubygems ohai chef"
-      sudo "/etc/init.d/chef-client stop"
+    task :bootstrap, :only => {:food_court => true } do
+
     end
 
     desc "deploy your food_court chef-solo cookbooks"
     task :deploy, :only => {:food_court => true } do
-      
+
     end
+
   end
-  
+
 end
 require 'capistrano/version'
 if Capistrano::Version::MAJOR < 2
