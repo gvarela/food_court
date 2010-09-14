@@ -16,7 +16,7 @@ module FoodCourt
       end
     end
 
-    def setup(template='nginx-passenger-ree')
+    def init(template='nginx-passenger-ree')
       puts "Setting up current directory for #{template} stack"
       FileUtils.mkdir_p File.join(current_path, 'config/chef')
       FileUtils.mkdir_p File.join(current_path, 'config/chef/deployments')
@@ -29,11 +29,22 @@ module FoodCourt
       # Provide your own sprinkle config or use the default one to bootstrap your slice.
       bootstrap_file ||= File.join(File.dirname(__FILE__), 'bootstrap.rb')
       # Sprinkle::OPTIONS[:force] = true
-      raise 'a bootstrap.rb file is required for bootstrapping, please run "food_court setup"' unless File.exists?( 'config/chef/bootstrap.rb' )
+      raise 'a bootstrap.rb file is required for bootstrapping, please run "food_court init"' unless File.exists?( 'config/chef/bootstrap.rb' )
       Sprinkle::OPTIONS[:verbose] = true
       # Sprinkle::OPTIONS[:test] = true
       Sprinkle::Script.sprinkle( File.read( bootstrap_file ) )
     end
+
+    def update( update_config = nil )
+      # Provide your own sprinkle config or use the default one to update_slice your slice.
+      update_config ||= File.join(File.dirname(__FILE__), 'update_slice.rb')
+      # Sprinkle::OPTIONS[:force] = true
+      raise 'a update_slice.rb file is required for updating the chef configuration on your slice, please run "food_court update"' unless File.exists?( 'config/chef/bootstrap.rb' )
+      Sprinkle::OPTIONS[:verbose] = true
+      # Sprinkle::OPTIONS[:test] = true
+      Sprinkle::Script.sprinkle( File.read( update_config ) )
+    end
+
 
     def help
       puts File.read('../../README.rdoc')

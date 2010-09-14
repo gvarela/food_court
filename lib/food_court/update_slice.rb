@@ -1,11 +1,7 @@
-require 'food_court/packages/base'
-require 'food_court/packages/build_essential'
-require 'food_court/packages/ruby'
-require 'food_court/packages/rubygems'
-require 'food_court/packages/chef_solo'
+require 'food_court/packages/update_chef'
 
-policy :chef_solo, :roles => :bootstrap do
-  requires :chef_solo
+policy :update_chef, :roles => :bootstrap do
+  requires :update_chef
 end
 
 deployment do

@@ -11,36 +11,41 @@ module FoodCourt
 
     def compile()
       time = Time.now
-      deployment_dir = File.join(current_path, 'config/chef/deployments',  time.strftime('%Y-%m-%d') + "-#{time}")
-      FileUtils.mkdir_p deployment_dir
+
+      deployment_dir = File.join(current_path, 'config/chef/deployments',  time.strftime('%Y-%m-%d-%h-%M-%S'))
+      FileUtils.mkdir_p deployment_dir, :verbose => true
+
       dna = config[:dna]
       File.open(deployment_dir + "/dna.json", "w"){ |f| f.write(dna.to_json) }
 
-      cache_path = config[:file_cache_path]
-      cookbook_paths = cookbooks.map{ |book| "#{cache_path}/#{book}"}
       File.open(deployment_dir + "/solo.rb", "w") do |file|
         file.write <<-EOH
-file_cache_path '#{cache_path}'
-cookbook_path   [#{cookbook_paths}]
+file_cache_path '#{config[:file_cache_path]}'
+cookbook_path   ['#{cookbook_paths.join("', '")}']
         EOH
-        FileUtils.cp_r File.join(current_path, 'config/chef/site-cookbooks'), File.join(deployment_dir, 'site-cookbooks')
       end
+      FileUtils.cp_r File.join(current_path, 'config/chef/site-cookbooks'), File.join(deployment_dir, 'site-cookbooks')
+      `cd #{deployment_dir} && tar czvf site-cookbooks.tar.gz site-cookbooks`
       return deployment_dir
     end
 
-    def fetch_remote_cookbooks()
-      config[:cookbooks]
+    def cookbook_remote_locations
+       config[:cookbooks].map{ |book, path| path }
     end
 
-    def cookbooks
-      ['site-cookbooks', 'cookbooks']
+    def cookbook_paths
+      cache_path = config[:file_cache_path]
+      books = []
+      config[:cookbooks].each{ |book, path| books << "#{cache_path}/#{book}"}
+      books << "#{cache_path}/site-cookbooks"
+      books
     end
 
     def configure()
       order_path = File.join(current_path, 'config/chef', 'order.rb')
       raise "no order.rb found in path [#{order_path}]" unless File.exists?(order_path)
       config_file = File.read(order_path)
-      eval "@config ||= #{config_file}"
+      @config ||= eval "#{config_file}"
     end
   end
 end

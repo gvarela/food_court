@@ -5,6 +5,9 @@ package :chef_solo do
   requires :rsync
   requires :wget
   requires :ssl_cert
+
+  post :install, 'mkdir -p /etc/chef'
+  post :install, 'mkdir -p /var/chef'
 end
 
 package :wget do

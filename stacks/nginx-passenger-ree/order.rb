@@ -2,7 +2,7 @@ application = "my_application"
 
 {
   :file_cache_path => "/var/chef",
-  :cookbooks => [ '' ],
+  :cookbooks => { 'cookbooks' => 'http://github.com/opscode/cookbooks/tarball/master' },
 
   :dna => {
     :apps_dir => "/data/#{application}",

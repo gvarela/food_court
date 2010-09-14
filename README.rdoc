@@ -4,12 +4,13 @@ Food Court is a streamlined way to use chef-solo and capistrano for VPS's such a
 
 = Instructions
 * cd into your project
-    food-court setup .
+    food-court init
+* add your root user, password, and host to config/chef/bootstrap.rb for bootstrapping your slice
+* setup your slice for chef
+    food-court bootstrap
 * modify your order.rb to change any default packages
-* the run the cap tasks to have chef-solo setup on the remote server
-    cap food_court:setup
-* lastly run the chauffeur tweaked chef-solo config on the remote server
-    cap food_court:deploy
+* then run update to push up your cookbooks and configure the server with chef-solo
+    food-court update
 
 = Roadmap
 * create a default template that works on Ubuntu with Nginx and Passenger
@@ -31,7 +32,7 @@ Food Court is a streamlined way to use chef-solo and capistrano for VPS's such a
 
 == Copyright
 
-Copyright (c) 2009 Gabe Varela. See LICENSE for details.
+Copyright (c) 2010 Gabe Varela. See LICENSE for details.
 
 == Inspiration
 Josh Peek:        http://github.com/josh/slicehost/
