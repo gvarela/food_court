@@ -12,21 +12,22 @@ end
 
 package :update_dna_config do
   transfer "#{deploy_dir}/dna.json", '/tmp/dna.json' do
+    pre :install, "mkdir -p /etc/chef"
     post :install, 'mv /tmp/dna.json /etc/chef/dna.json'
   end
   transfer "#{deploy_dir}/solo.rb", '/tmp/solo.rb' do
+    pre :install, "mkdir -p /etc/chef"
     post :install, 'mv /tmp/solo.rb /etc/chef/solo.rb'
   end
-
-  transfer "#{deploy_dir}/site-cookbooks.tar.gz", "/tmp/site-cookbooks.tar.gz" do
-    pre :install, "mkdir -p /var/chef"
-    pre :install, "rm -rf #{packager.config[:file_cache_path]}/site-cookbooks"
-    post :install, "tar -zxvf /tmp/site-cookbooks.tar.gz -C #{packager.config[:file_cache_path]}"
-  end
-  
 end
 
 package :update_cookbooks do
+  transfer "#{deploy_dir}/site-cookbooks.tar.gz", "/tmp/site-cookbooks.tar.gz" do
+    pre :install, "mkdir -p /var/chef"
+    # pre :install, "rm -rf #{packager.config[:file_cache_path]}/site-cookbooks"
+    post :install, "tar -zxvf /tmp/site-cookbooks.tar.gz -C #{packager.config[:file_cache_path]}"
+  end
+
   noop do
     packager.config[:cookbooks].each do |book, path|
       cookbook_path = "#{packager.config[:file_cache_path]}/#{book}"
