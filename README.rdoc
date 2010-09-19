@@ -12,6 +12,16 @@ Food Court is a streamlined way to use chef-solo and capistrano for VPS's such a
 * then run update to push up your cookbooks and configure the server with chef-solo
     food-court update
 
+= Gotchas
+Since Food Court uses Chef you are bound to run into some Chef specific issues
+Chef help: http://wiki.opscode.com/display/chef/Home
+A good intro to chef-solo: http://akitaonrails.com/2010/02/20/cooking-solo-with-chef
+
+a common issue on slicehost is the fqdn in /etc/hosts
+  67.xx.xx.xx my-slice
+should be
+  67.xx.xx.xx my-slice.local my-slice
+
 = Roadmap
 * create a default template that works on Ubuntu with Nginx and Passenger
 * add generators for stubbing site-cookbooks in the current project repo
@@ -36,7 +46,10 @@ Copyright (c) 2010 Gabe Varela. See LICENSE for details.
 
 == Inspiration
 Josh Peek:        http://github.com/josh/slicehost/
-
 Thomas Balthazar: http://github.com/suitmymind/ubuntu-machine/
-
 Mike Hale:        http://github.com/mikehale/drive-thru/
+
+== Thanks
+Fabio Akita for the great article on chef-solo
+http://akitaonrails.com/2010/02/20/cooking-solo-with-chef
+

@@ -22,6 +22,7 @@ module FoodCourt
         file.write <<-EOH
 file_cache_path '#{config[:file_cache_path]}'
 cookbook_path   ['#{cookbook_paths.join("', '")}']
+log_level :#{config[:log_level] || 'info'}
         EOH
       end
       FileUtils.cp_r File.join(current_path, 'config/chef/site-cookbooks'), File.join(deployment_dir, 'site-cookbooks')
