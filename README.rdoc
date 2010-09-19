@@ -14,7 +14,9 @@ Food Court is a streamlined way to use chef-solo and capistrano for VPS's such a
 
 = Gotchas
 Since Food Court uses Chef you are bound to run into some Chef specific issues
+
 Chef help: http://wiki.opscode.com/display/chef/Home
+
 A good intro to chef-solo: http://akitaonrails.com/2010/02/20/cooking-solo-with-chef
 
 a common issue on slicehost is the fqdn in /etc/hosts
@@ -46,7 +48,9 @@ Copyright (c) 2010 Gabe Varela. See LICENSE for details.
 
 == Inspiration
 Josh Peek:        http://github.com/josh/slicehost/
+
 Thomas Balthazar: http://github.com/suitmymind/ubuntu-machine/
+
 Mike Hale:        http://github.com/mikehale/drive-thru/
 
 == Thanks
