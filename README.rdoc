@@ -25,12 +25,9 @@ should be
   67.xx.xx.xx my-slice.local my-slice
 
 = Roadmap
-* create a default template that works on Ubuntu with Nginx and Passenger
-* add generators for stubbing site-cookbooks in the current project repo
 * enable rollingback a deployment
+* add generators for stubbing site-cookbooks in the current project repo
 * enable setup to accept a remote location for template packages
-* setup a site to house common template packages (similar to the chef cookbooks site)
-* add ability to package up a template package and send to package site
 
 == Note on Patches/Pull Requests
  
