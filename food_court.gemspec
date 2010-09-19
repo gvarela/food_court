@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{food_court}
-  s.version = "0.0.1"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Gabe Varela"]
-  s.date = %q{2010-09-05}
+  s.date = %q{2010-09-19}
   s.default_executable = %q{food-court}
   s.description = %q{Bootstrap and provision your ubuntu slice with ease}
   s.email = %q{gvarela@gmail.com}
@@ -21,25 +21,32 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
      ".gitignore",
+     ".rvmrc",
      "LICENSE",
      "README.rdoc",
      "Rakefile",
      "VERSION",
      "bin/food-court",
+     "food_court.gemspec",
      "lib/food_court.rb",
      "lib/food_court/bootstrap.rb",
      "lib/food_court/command.rb",
      "lib/food_court/packager.rb",
+     "lib/food_court/packages/base.rb",
+     "lib/food_court/packages/build_essential.rb",
+     "lib/food_court/packages/chef_solo.rb",
+     "lib/food_court/packages/ruby.rb",
+     "lib/food_court/packages/rubygems.rb",
+     "lib/food_court/packages/update_chef.rb",
      "lib/food_court/recipes.rb",
+     "lib/food_court/update_slice.rb",
      "spec/command_spec.rb",
      "spec/fixtures/order.rb",
      "spec/packager_spec.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb",
-     "stacks/nginx-passenger-ree/order.rb",
-     "stacks/nginx-passenger-ree/site-cookbooks/applications/definitions/nginx_app.rb",
-     "stacks/nginx-passenger-ree/site-cookbooks/applications/recipes/default.rb",
-     "stacks/nginx-passenger-ree/site-cookbooks/applications/templates/defaults/passenger.vhost.erb"
+     "stacks/nginx-passenger-ree/bootstrap.rb",
+     "stacks/nginx-passenger-ree/order.rb"
   ]
   s.homepage = %q{http://github.com/gvarela/food_court}
   s.rdoc_options = ["--charset=UTF-8"]
