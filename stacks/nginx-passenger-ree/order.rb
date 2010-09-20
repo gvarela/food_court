@@ -35,7 +35,7 @@ user = :deploy
       :install_path => "/usr/local",
       :ruby_bin => "/usr/local/bin/ruby",
       :gems_dir => "/usr/local/lib/ruby/gems/1.8",
-      :url => "http://rubyforge.org/frs/download.php/71096/ruby-enterprise-1.8.7-2010.01"
+      :url => "http://rubyforge.org/frs/download.php/68719/ruby-enterprise-1.8.7-2010.01"
     },
 
     :passenger_enterprise => {
