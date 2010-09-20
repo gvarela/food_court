@@ -1,5 +1,24 @@
-application = "my-application.com"
+# your application name
+application = "my-application"
+# domain of your site
+domain = "my-application.com"
+# user you want to create for deployments
 user = :deploy
+ # openssl passwd -l
+user_password_hash = "..."
+# your public ssh key
+user_ssh_key = "ssh-rsa ... ==email@example.com"
+#your mysql root user password
+mysql_root_password = "..."
+
+# To deploy you must add a new remote origin to your local git repo
+#   git remote add production deploy@xx.xx.xx.xx:~/repos/my-application.git
+# Then to deploy your code changes
+#   git push production master
+# See: http://akitaonrails.com/2010/02/20/cooking-solo-with-chef for info
+
+# Assumes you are using bundler and that your code is on the master branch
+# If you understand how chef works feel free to update the code below
 
 {
   :file_cache_path => "/var/chef",
@@ -9,14 +28,13 @@ user = :deploy
   :dna => {
     :users =>  {
       user =>  {
- # openssl passwd -l
-        :password => "password-hash",
+        :password => user_password_hash,
         :comment =>  "Deploy User"
       }
     },
 
     :ssh_keys => {
-      user => "ssh-rsa ... ==email@example.com"
+      user => user_ssh_key
     },
 
     :authorization => {
@@ -26,7 +44,7 @@ user = :deploy
     },
 
     :mysql => {
-      :server_root_password => "root-password",
+      :server_root_password => mysql_root_password
       :bind_address => "127.0.0.1"
     },
 
@@ -53,10 +71,10 @@ user = :deploy
 
     :apps => [
       {
-        :name => "my-application",
+        :name => application
         :username => user,
         :git_branch => "master",
-        :server =>  "my-application.local",
+        :server =>  domain,
         :pre_migration =>  "bundle install"
       }
     ],
