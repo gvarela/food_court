@@ -44,7 +44,7 @@ mysql_root_password = "..."
     },
 
     :mysql => {
-      :server_root_password => mysql_root_password
+      :server_root_password => mysql_root_password,
       :bind_address => "127.0.0.1"
     },
 
@@ -71,7 +71,7 @@ mysql_root_password = "..."
 
     :apps => [
       {
-        :name => application
+        :name => application,
         :username => user,
         :git_branch => "master",
         :server =>  domain,

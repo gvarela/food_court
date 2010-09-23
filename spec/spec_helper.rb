@@ -1,3 +1,7 @@
+require "rubygems"
+require "bundler"
+Bundler.setup(:default, :development)
+
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'food_court'
@@ -13,10 +17,20 @@ end
 
 def stub_template
   @path = File.expand_path(File.dirname(__FILE__) + '/fixtures')
-    ENV['PATH'] = @path
+  FileUtils.mkdir_p @path
 
-    @order = File.open( File.join( FoodCourt::Command::TEMPLATE_PATH, '/slicehost', 'order.rb'), 'w' ) do |f|
-      f.write <<-EOH
+  ENV['PATH'] = @path
+
+  @bootstrap = File.open( File.join( FoodCourt::Command::TEMPLATE_PATH, '/slicehost', 'bootstrap.rb'), 'w') do |f|
+    f.write <<-EOH
+set :user, 'root'
+role :bootstrap, ''
+set :run_method, :run
+    EOH
+  end
+
+  @order = File.open( File.join( FoodCourt::Command::TEMPLATE_PATH, '/slicehost', 'order.rb'), 'w' ) do |f|
+    f.write <<-EOH
 {
   :file_cache_path => "/var/chef",
   :cookbooks => [ '' ],
@@ -39,8 +53,11 @@ def stub_template
     ]
 }
 }
-      EOH
+    EOH
 
-    end
-    @default_recipe = File.open( File.join( FoodCourt::Command::TEMPLATE_PATH, '/slicehost/site-cookbooks/applications/recipes', 'default.rb'), 'w' ) { |f| f.write 'test' }
+  end
+
+  @default_recipe = File.open( File.join( FoodCourt::Command::TEMPLATE_PATH, '/slicehost/site-cookbooks/applications/recipes', 'default.rb'), 'w' ) { |f| f.write 'test' }
+
+  Dir.chdir @path
 end

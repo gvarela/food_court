@@ -12,8 +12,8 @@ module FoodCourt
     def compile()
       time = Time.now
 
-      deployment_dir = File.join(current_path, 'config/chef/deployments',  time.strftime('%Y-%m-%d-%h-%M-%S'))
-      FileUtils.mkdir_p deployment_dir, :verbose => true
+      deployment_dir = File.join(current_path, 'config/chef/deployments',  time.strftime('%Y-%m-%d-%H-%M-%S'))
+      FileUtils.mkdir_p deployment_dir
 
       dna = config[:dna]
       File.open(deployment_dir + "/dna.json", "w"){ |f| f.write(dna.to_json) }

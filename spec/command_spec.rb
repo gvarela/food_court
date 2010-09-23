@@ -5,9 +5,9 @@ describe "FoodCourt::Command" do
     stub_template
   end
 
-  context "#setup" do
+  context "#init" do
     before do
-      @command = FoodCourt::Command.new('setup', 'slicehost')
+      @command = FoodCourt::Command.new('init', 'slicehost')
     end
 
     it "should create a chef directory" do

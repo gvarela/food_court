@@ -7,26 +7,27 @@ describe "FoodCourt::Packager" do
 
   context "#configure" do
     before do
-      FoodCourt::Command.new('setup', 'slicehost')
-      @command = FoodCourt::Packager.new(@path)
-      @command.configure
+      FoodCourt::Command.new('init', 'slicehost')
+      @packager = FoodCourt::Packager.new(@path)
+      @packager.configure
     end
 
     it "should eval file into @config as a hash" do
-      @command.config.should be_a Hash
+      @packager.config.should be_a Hash
     end
 
     it "should have :dna in the config hash" do
-      @command.config[:dna].should be_a Hash
+      @packager.config[:dna].should be_a Hash
     end
   end
 
   context "#compile" do
     before do
-      FoodCourt::Command.new('setup', 'slicehost')
-      @command = FoodCourt::Packager.new(@path)
-      @command.configure
-      @command.compile
+      FoodCourt::Command.new('init', 'slicehost')
+      @packager = FoodCourt::Packager.new(@path)
+      @packager.should_receive(:`).with("cd #{File.expand_path( File.join( File.dirname(__FILE__), 'fixtures', 'config/chef/deployments', Time.now.strftime('%Y-%m-%d-%H-%M-%S'))) } && tar czvf site-cookbooks.tar.gz site-cookbooks").and_return(true)
+      @packager.configure
+      @packager.compile
     end
 
     it "should compile dna.json" do
