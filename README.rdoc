@@ -1,16 +1,25 @@
 = Food Court
 
-Food Court is a streamlined way to use chef-solo and capistrano for VPS's such as slicehost.
+Food Court is a streamlined way to use chef-solo and capistrano for VPS's such as slicehost. Setup a new slice in 15 minutes or less.
 
 = Instructions
+* install the gem
+    gem install food_court
 * cd into your project
     food-court init
 * add your root user, password, and host to config/chef/bootstrap.rb for bootstrapping your slice
 * setup your slice for chef
     food-court bootstrap
-* modify your order.rb to change any default packages
+* modify your order.rb to add your desired user name and passwords and change any default packages
 * then run update to push up your cookbooks and configure the server with chef-solo
     food-court update
+
+= Cookbooks
+*You can provide your own customizations inside of 'site-cookbooks' these get zipped up and pushed to your server. This allows you to override or create more custom recipes for your app.
+
+*The default stack uses a base set of cookbooks merged from opscode and 37signals by akitaonrails. They have been stripped down to just the essentials and can be found at http://github.com/gvarela/food_court_cookbooks. You can actually use any cookbooks you would like just change the order.rb to point to your favorite repository.
+
+*The food_court_cookbooks repository will be a mirror of recipes that are known to work together on simple apps for hosts such as Slicehost. Feel free to fork it and add your own.
 
 = Gotchas
 Since Food Court uses Chef you are bound to run into some Chef specific issues
@@ -25,6 +34,7 @@ should be
   67.xx.xx.xx my-slice.local my-slice
 
 = Roadmap
+* add cucumber features for integration testing
 * enable rollingback a deployment
 * add generators for stubbing site-cookbooks in the current project repo
 * enable setup to accept a remote location for template packages

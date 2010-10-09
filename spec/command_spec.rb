@@ -16,8 +16,6 @@ describe "FoodCourt::Command" do
 
     it "should create a chef/site-cookbooks directory" do
       File.directory?(File.join(@path, 'config/chef/site-cookbooks')).should be_true
-      File.directory?(File.join(@path, 'config/chef/site-cookbooks/applications')).should be_true
-      File.directory?(File.join(@path, 'config/chef/site-cookbooks/applications/recipes')).should be_true
     end
 
     it "should create a chef/deployments directory" do
@@ -29,5 +27,16 @@ describe "FoodCourt::Command" do
       File.file?(order_path).should be_true
       File.read(order_path).should_not be_empty
     end
+
+    context "#create_cookbooks" do
+      before do
+        @command = FoodCourt::Command.new('create_cookbook', 'sample')
+      end
+
+      it "should create a stub cookbook" do
+        File.directory?(File.join(@path, 'config/chef/site-cookbooks/sample')).should be_true
+      end
+    end
   end
+
 end

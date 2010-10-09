@@ -4,7 +4,8 @@ application = "my-application"
 domain = "my-application.com"
 # user you want to create for deployments
 user = :deploy
- # openssl passwd -l
+# password for the use needs to be a hash use openssl to generate
+# openssl passwd -1
 user_password_hash = "..."
 # your public ssh key
 user_ssh_key = "ssh-rsa ... ==email@example.com"
@@ -65,9 +66,9 @@ mysql_root_password = "..."
       {:name => 'bundler'}
     ],
 
-    # :pkgs => [
+    :pkgs => [
       # {:name => 'wget'}
-    # ],
+    ],
 
     :apps => [
       {

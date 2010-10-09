@@ -20,9 +20,9 @@ module FoodCourt
       puts "Setting up current directory for #{template} stack"
       FileUtils.mkdir_p File.join(current_path, 'config/chef')
       FileUtils.mkdir_p File.join(current_path, 'config/chef/deployments')
+      FileUtils.mkdir_p File.join(current_path, 'config/chef/site-cookbooks')
       FileUtils.cp File.join(TEMPLATE_PATH, template, 'order.rb'), File.join(current_path, 'config/chef', 'order.rb')
       FileUtils.cp File.join(TEMPLATE_PATH, template, 'bootstrap.rb'), File.join(current_path, 'config/chef', 'bootstrap.rb')
-      FileUtils.cp_r File.join(TEMPLATE_PATH, template, 'site-cookbooks'), File.join(current_path, 'config/chef/site-cookbooks')
     end
 
     def bootstrap( bootstrap_file = nil )
@@ -53,14 +53,14 @@ module FoodCourt
     def create_cookbook(name, dir=current_path)
       raise "Must provide a name" unless name
       puts "** Creating cookbook #{name}"
-      sh "mkdir -p #{File.join(dir, name, "attributes")}"
-      sh "mkdir -p #{File.join(dir, name, "recipes")}"
-      sh "mkdir -p #{File.join(dir, name, "definitions")}"
-      sh "mkdir -p #{File.join(dir, name, "libraries")}"
-      sh "mkdir -p #{File.join(dir, name, "files", "default")}"
-      sh "mkdir -p #{File.join(dir, name, "stacks", "default")}"
-      unless File.exists?(File.join(dir, name, "recipes", "default.rb"))
-        open(File.join(dir, name, "recipes", "default.rb"), "w") do |file|
+      FileUtils.mkdir_p File.join(dir, 'config/chef/site-cookbooks', name, "attributes")
+      FileUtils.mkdir_p File.join(dir, 'config/chef/site-cookbooks', name, "recipes")
+      FileUtils.mkdir_p File.join(dir, 'config/chef/site-cookbooks', name, "definitions")
+      FileUtils.mkdir_p File.join(dir, 'config/chef/site-cookbooks', name, "libraries")
+      FileUtils.mkdir_p File.join(dir, 'config/chef/site-cookbooks', name, "files", "default")
+      FileUtils.mkdir_p File.join(dir, 'config/chef/site-cookbooks', name, "stacks", "default")
+      unless File.exists?(File.join(dir, 'config/chef/site-cookbooks', name, "recipes", "default.rb"))
+        File.open(File.join(dir, 'config/chef/site-cookbooks', name, "recipes", "default.rb"), "w") do |file|
           file.puts <<-EOH
 #
 # Cookbook Name:: #{name}
