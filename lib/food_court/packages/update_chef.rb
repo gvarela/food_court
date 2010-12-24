@@ -33,7 +33,7 @@ package :update_cookbooks do
       cookbook_path = "#{packager.config[:file_cache_path]}/#{book}"
       pre :install, "rm -rf #{cookbook_path}"
       pre :install, "mkdir -p #{cookbook_path}"
-      pre :install, "wget -O #{packager.config[:file_cache_path]}/#{book}.tar.gz #{path}"
+      pre :install, "wget --no-check-certificate -O #{packager.config[:file_cache_path]}/#{book}.tar.gz #{path}"
       pre :install, "tar zxvf #{packager.config[:file_cache_path]}/#{book}.tar.gz --strip-components=1 -C #{cookbook_path}" 
     end
   end

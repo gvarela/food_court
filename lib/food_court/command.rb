@@ -47,7 +47,7 @@ module FoodCourt
 
 
     def help
-      puts File.read('../../README.rdoc')
+      puts File.read(File.join(File.dirname(__FILE__), '../../README.rdoc'))
     end
 
     def create_cookbook(name, dir=current_path)
