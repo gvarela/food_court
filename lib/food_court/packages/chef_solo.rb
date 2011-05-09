@@ -1,5 +1,7 @@
 package :chef_solo do
-  gem 'chef'
+  gem 'chef' do
+    version '0.9.16'
+  end
   requires :rubygems
   requires :ohai
   requires :rsync
